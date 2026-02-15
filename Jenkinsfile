@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        jdkJDK17'
-    }
-
     stages {
         stage('Clean Workspace') {
             steps {
@@ -16,14 +12,13 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out source code...'
-                \
+                // Code is already checked out by the SCM step
             }
         }
 
         stage('Compile Java') {
             steps {
                 echo 'Compiling HelloWorld.java...'
-                
                 bat 'javac HelloWorld.java'
             }
         }
@@ -31,7 +26,6 @@ pipeline {
         stage('Archive Artifacts') {
             steps {
                 echo 'Archiving compiled class files...'
-                
                 archiveArtifacts artifacts: '*.class', fingerprint: true
             }
         }
@@ -42,16 +36,16 @@ pipeline {
             echo 'Pipeline finished. Cleaning up...'
         }
         success {
-            echo ' SUCCESS: The pipeline completed successfully!'
+            echo '🎉 SUCCESS: The pipeline completed successfully!'
         }
         failure {
-            echo ' FAILURE: The pipeline failed. Check the logs for details.'
+            echo '❌ FAILURE: The pipeline failed. Check the logs for details.'
         }
         unstable {
-            echo ' UNSTABLE: The pipeline is unstable (e.g., test failures).'
+            echo '⚠️ UNSTABLE: The pipeline is unstable (e.g., test failures).'
         }
         changed {
-            echo ' Status changed from the previous build.'
+            echo '📊 Status changed from the previous build.'
         }
     }
 }
