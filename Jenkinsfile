@@ -12,7 +12,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out source code...'
-                // Code is already checked out by the SCM step
+                
+                checkout scm
             }
         }
 
@@ -36,16 +37,16 @@ pipeline {
             echo 'Pipeline finished. Cleaning up...'
         }
         success {
-            echo '🎉 SUCCESS: The pipeline completed successfully!'
+            echo ' SUCCESS: The pipeline completed successfully!'
         }
         failure {
-            echo '❌ FAILURE: The pipeline failed. Check the logs for details.'
+            echo ' FAILURE: The pipeline failed. Check the logs for details.'
         }
         unstable {
-            echo '⚠️ UNSTABLE: The pipeline is unstable (e.g., test failures).'
+            echo ' UNSTABLE: The pipeline is unstable (e.g., test failures).'
         }
         changed {
-            echo '📊 Status changed from the previous build.'
+            echo ' Status changed from the previous build.'
         }
     }
 }
