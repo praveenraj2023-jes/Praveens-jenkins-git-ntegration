@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        echo 'JDK17'
+        jdkJDK17'
     }
 
     stages {
