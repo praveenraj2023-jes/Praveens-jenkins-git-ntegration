@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        
+    }
+
     stages {
         stage('Clean Workspace') {
             steps {
@@ -8,22 +12,27 @@ pipeline {
                 cleanWs()
             }
         }
+
         stage('Checkout') {
             steps {
-                echo 'Checking out code from GitHub...'
-                // No git step needed – Jenkins automatically checks out the repo
+                echo 'Checking out source code...'
+                \
             }
         }
-        stage('Build') {
+
+        stage('Compile Java') {
             steps {
-                echo 'Building the project...'
-                bat 'echo Build completed successfully.'
+                echo 'Compiling HelloWorld.java...'
+                
+                bat 'javac HelloWorld.java'
             }
         }
-        stage('Test') {
+
+        stage('Archive Artifacts') {
             steps {
-                echo 'Running tests...'
-                bat 'echo All tests passed.'
+                echo 'Archiving compiled class files...'
+                
+                archiveArtifacts artifacts: '*.class', fingerprint: true
             }
         }
     }
@@ -33,16 +42,16 @@ pipeline {
             echo 'Pipeline finished. Cleaning up...'
         }
         success {
-            echo '🎉 SUCCESS: The pipeline completed successfully!'
+            echo ' SUCCESS: The pipeline completed successfully!'
         }
         failure {
-            echo '❌ FAILURE: The pipeline failed. Check the logs for details.'
+            echo ' FAILURE: The pipeline failed. Check the logs for details.'
         }
         unstable {
-            echo '⚠️ UNSTABLE: The pipeline is unstable (e.g., test failures).'
+            echo ' UNSTABLE: The pipeline is unstable (e.g., test failures).'
         }
         changed {
-            echo '📊 Status changed from the previous build.'
+            echo ' Status changed from the previous build.'
         }
     }
 }
